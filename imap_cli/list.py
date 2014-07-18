@@ -79,9 +79,12 @@ def main():
         ctx.format_status = args['--format']
 
     helpers.connect(ctx)
-    for mail_info in list(ctx, directory=args['<directory>']):
-        sys.stdout.write(ctx.format_list.format(**mail_info))
-        sys.stdout.write('\n')
+    try:
+        for mail_info in list(ctx, directory=args['<directory>']):
+            sys.stdout.write(ctx.format_list.format(**mail_info))
+            sys.stdout.write('\n')
+    except KeyboardInterrupt, e:
+        pass # user aborted enumerating
     return 0
 
 
